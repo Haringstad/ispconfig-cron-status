@@ -1,0 +1,39 @@
+  - name: ISPConfig                                                           
+    interval: 30s
+    rules:     
+      - alert: ISPConfig Database Connection Failed
+        expr: ispconfig_cron_status == 2
+        for: 0m                                                                
+        labels:                                                                                                           
+          severity: critical
+        annotations:
+          title: Node {{ $labels.instance }} has no connetion to the ISPConfig DB
+          summary: Host {{ $labels.instance }} has a ISPConfig database connection problem
+          description: "ISPConfig Database connection on {{ $labels.instance }} failed"
+      - alert: ISPConfig Cron Job died
+        expr: ispconfig_cron_status == 3
+        for: 0m     
+        labels:                                                               
+          severity: warning                                                                                             
+        annotations:     
+          title: Node {{ $labels.instance }} seems to have an issue with an unfinished cron job
+          summary: Host {{ $labels.instance }} has an ISPConfig cron job lock, but it is not running.
+          description: "ISPConfig Cron Job on {{ $labels.instance }} died and lock file still exists"
+      - alert: ISPConfig Cron Job delay
+        expr: ispconfig_cron_status == 4
+        for: 5m          
+        labels:   
+          severity: warning                 
+        annotations:     
+          title: Node {{ $labels.instance }} seems to have an issue with a still running cron job                     
+          summary: Host {{ $labels.instance }} has an ISPConfig cron job lock, and job is still running.
+          description: "ISPConfig Cron Job on {{ $labels.instance }} seems to take a long time"
+      - alert: ISPConfig Cron Job error
+        expr: ispconfig_cron_status == 0
+        for: 5m
+        labels:    
+          severity: critical
+        annotations:
+          title: Node {{ $labels.instance }} seems to have an issue with running cron
+          summary: Host {{ $labels.instance }} has an ISPConfig cron issue.                                 
+          description: "ISPConfig Cron Job on {{ $labels.instance }} seems to have an issue"
