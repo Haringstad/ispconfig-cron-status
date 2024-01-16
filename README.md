@@ -23,4 +23,6 @@ Reload systemd daemon:
   systemctl start ispconfig-cron-status
   systemctl enable ispconfig-cron-status
 ```
+## Prometheus Rules
+I've added an example rule set, so you will be alerted when the ISPConfig cronjob is failing.
 
