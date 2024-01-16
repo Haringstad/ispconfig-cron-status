@@ -1,0 +1,9 @@
+[Unit]
+Description=ISPConfig Cron Monitor
+
+[Service]
+ExecStart=/usr/local/bin/ispconfig-cron-status.sh
+Restart=always
+
+[Install]
+WantedBy=default.target
